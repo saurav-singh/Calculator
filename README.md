@@ -1,3 +1,5 @@
-# Flutter Calculator App
+# Calculator Mobile App
 
-S00n to be a kool one!
+- Simple Calculator App
+- PostFix Operation for calculation
+
