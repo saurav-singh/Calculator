@@ -23,12 +23,11 @@ class CalculatorState extends State<Calculator> {
   String result = "";
 
   Widget button(String value) => Container(
-        padding: EdgeInsets.all(10.0),
-        width: 80,
+        padding: EdgeInsets.all(5.0),
         height: 80,
         child: RaisedButton(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(100.0)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
           onPressed: () {
             setState(() {
               if (value == "C") {
@@ -49,27 +48,57 @@ class CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Calculator")),
-      body: Column(
-        children: [
-          Container(
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(10),
-              decoration: BoxDecoration(color: Colors.lightBlueAccent),
-              width: 300,
-              height: 40,
-              child: Text(query, style: TextStyle(fontSize: 20.0))),
-          Text(result, style: TextStyle(fontSize: 20.0)),
-          Row(children: [button("7"), button("8"), button("9"), button("+")]),
-          Row(children: [button("4"), button("5"), button("6"), button("-")]),
-          Row(children: [button("1"), button("2"), button("3"), button("*")]),
-          Row(children: [button("C"), button("0"), button("."), button("/")]),
-          Row(
-            children: [button("=")],
+        appBar: AppBar(),
+        body: Column(children: [
+          // Display Numbers
+          SizedBox(
+              height: 100.0,
+              child: Column(
+                children: [Text(query), Text(result)],
+              )),
+
+          // Display Buttons
+          SizedBox(
+            height: MediaQuery.of(context).size.height - 200,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Table(
+                children: [
+                  TableRow(children: [
+                    button("1"),
+                    button("2"),
+                    button("3"),
+                    button("*")
+                  ]),
+                  TableRow(children: [
+                    button("4"),
+                    button("5"),
+                    button("6"),
+                    button("-")
+                  ]),
+                  TableRow(children: [
+                    button("7"),
+                    button("8"),
+                    button("9"),
+                    button("+")
+                  ]),
+                  TableRow(children: [
+                    button("C"),
+                    button("0"),
+                    button("."),
+                    button("/")
+                  ]),
+                  TableRow(children: [
+                    Container(),
+                    Container(),
+                    Container(),
+                    button("="),
+                  ])
+                ],
+              ),
+            ),
           )
-        ],
-      ),
-    );
+        ]));
   }
 }
 
