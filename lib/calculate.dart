@@ -16,6 +16,9 @@ String calculate(String query) {
       return "err";
     }
   }
+  if (result.length > 7) {
+    result = result.substring(0, 7);
+  }
   return result;
 }
 

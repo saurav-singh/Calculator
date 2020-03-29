@@ -7,6 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(primaryColor: Colors.blue),
       home: Calculator(),
     );
@@ -25,14 +26,13 @@ class CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
+        backgroundColor: Colors.black,
+        appBar: AppBar(
+          backgroundColor: Colors.black,
+        ),
         body: Column(children: [
           // Display Numbers
-          SizedBox(
-              height: 100.0,
-              child: Column(
-                children: [Text(query), Text(result)],
-              )),
+          SizedBox(height: 100.0, child: viewNumbers(query, result)),
 
           // Display Buttons
           SizedBox(
@@ -79,6 +79,20 @@ class CalculatorState extends State<Calculator> {
   }
 
   // Widgets for the UI
+  Widget viewNumbers(String query, String result) => Column(
+        children: [
+          Text(
+            query,
+            style: TextStyle(
+                fontSize: 40, fontWeight: FontWeight.bold, color: Colors.teal),
+          ),
+          Text(
+            result,
+            style: TextStyle(
+                fontSize: 40, fontWeight: FontWeight.bold, color: Colors.teal),
+          )
+        ],
+      );
 
   Widget button(String value) => Container(
         padding: EdgeInsets.all(5.0),
@@ -90,9 +104,15 @@ class CalculatorState extends State<Calculator> {
             setState(() {
               if (value == "C") {
                 query = "";
-              } else {
+                result = "";
+              } else if (value == "=") {
+                query = result;
+                result = "";
+              } else if (query.length < 15) {
                 query += value;
+                String prev = result;
                 result = calculate(query);
+                result = result == "err" ? prev : result;
               }
             });
           },
