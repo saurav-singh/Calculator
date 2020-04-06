@@ -3,7 +3,7 @@
 - Simple Calculator App
 - PostFix Operation for calculation
 
-<img src="screenshot.png" width=200 height=500>
+<img src="screenshot.png" width=300 height=500>
 
 
 
