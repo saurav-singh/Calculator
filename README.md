@@ -3,6 +3,6 @@
 - Simple Calculator App
 - PostFix Operation for calculation
 
-![](./screenshot.png){width: 50%}
+![](screenshot.png){width: 50%}
 
 
