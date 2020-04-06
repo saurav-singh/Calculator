@@ -3,6 +3,6 @@
 - Simple Calculator App
 - PostFix Operation for calculation
 
-![alt text](https://github.com/saurav-singh/Calculator/blob/master/screenshot.png =200x500 "Current Looks")
+![](./screenshot.png){:height="200px" width="500px"}
 
 
