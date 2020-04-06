@@ -1,46 +1,56 @@
 import 'package:stack/stack.dart' as _Stack;
 
-// TEMP CALCULATION FUNCTIONS - put to a class
-// * -> ×
-// / -> ÷
-   
+/*
+Map ( * -> × )
+Map ( / -> ÷ )
+*/
+
+String operators = "+-×÷";
+ _Stack.Stack<String> stack;
 
 String calculate(String query) {
   String result = "";
-  if (query.contains("+") ||
-      query.contains("-") ||
-      query.contains("×") ||
-      query.contains("÷")) {
-    query = processQuery(query);
-    query = getPostfix(query);
+  bool compute = false;
+
+  // If the query contains operators then compute
+  for (int i = 0; i < query.length; i++) {
+    if (operators.contains(query[i])) {
+      compute = true;
+      break;
+    }
+  }
+
+  // Preprocess then compute
+  // Query -> Infix -> Postfix -> Result
+  if (compute) {
     try {
+      query = processQuery(query);
+      query = getPostfix(query);
       result = getResult(query);
     } catch (error) {
       return "err";
     }
   }
-  if (result.length > 7) {
-    result = result.substring(0, 7);
-  }
+
+  // Limit result length to max 7
+  result = result.length > 7 ? result.substring(0, 7) : result;
   return result;
 }
 
+// Preprocess query -> infix
 String processQuery(String query) {
   String newQuery = "";
-  String operators = "+-×÷";
   for (int i = 0; i < query.length; i++) {
-    if (operators.contains(query[i]))
-      newQuery += " " + query[i] + " ";
-    else
-      newQuery += query[i];
+    String c = query[i];
+    newQuery += operators.contains(c) ? " " + c + " " : c;
   }
   return newQuery.trimRight();
 }
 
+// Preprocess infix -> postfix using stack
 String getPostfix(String infix) {
   _Stack.Stack<String> stack = _Stack.Stack();
   String postfix = "";
-  String operators = "+-×÷";
   Map order = {"+": 1, "-": 1, "×": 2, "÷": 2, "(": 3, ")": 3};
   List<String> tokens = infix.split(" ");
 
@@ -68,12 +78,14 @@ String getPostfix(String infix) {
   return postfix.trimRight();
 }
 
+// Compute postfix results using stack
 String getResult(String query) {
   _Stack.Stack<double> stack = _Stack.Stack();
   List<String> tokens = query.split(" ");
-  String operators = "+-×÷";
 
+  // Return 0 for invalid query
   if (tokens.length < 2 && tokens.length % 2 == 0) return "0";
+
   for (int i = 0; i < tokens.length; i++) {
     if (operators.contains(tokens[i])) {
       double x = stack.pop();
@@ -91,20 +103,3 @@ String getResult(String query) {
   }
   return stack.pop().toString();
 }
-
-// class Calculate {
-
-//   String query;
-//   String result;
-
-//   Calculate(){
-//     query = "0";
-//     result = "0";
-//   }
-
-//   void setQuery(String query) {
-//     print(query);
-//     this.query = query;
-//   }
-
-// }

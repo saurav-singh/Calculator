@@ -73,6 +73,7 @@ class CalculatorState extends State<Calculator> {
         ),
       ),
 
+      // Equals button
       Container(
         width: _width,
         alignment: Alignment.centerRight,
@@ -82,7 +83,9 @@ class CalculatorState extends State<Calculator> {
     ]));
   }
 
-  // Widgets for the UI
+/*
+ * UI Widgets
+**/
   Widget viewNumbers(String query, String result) {
     return Stack(
       children: [
