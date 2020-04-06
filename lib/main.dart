@@ -8,7 +8,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.blue),
       home: Calculator(),
     );
   }
@@ -25,81 +24,103 @@ class CalculatorState extends State<Calculator> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Colors.black,
-        appBar: AppBar(
-          backgroundColor: Colors.black,
-        ),
-        body: Column(children: [
-          // Display Numbers
-          SizedBox(height: 100.0, child: viewNumbers(query, result)),
+    final _width = MediaQuery.of(context).size.width;
 
-          // Display Buttons
-          SizedBox(
-            height: MediaQuery.of(context).size.height - 200,
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Table(
-                children: [
-                  TableRow(children: [
-                    button("1"),
-                    button("2"),
-                    button("3"),
-                    button("*")
-                  ]),
-                  TableRow(children: [
-                    button("4"),
-                    button("5"),
-                    button("6"),
-                    button("-")
-                  ]),
-                  TableRow(children: [
-                    button("7"),
-                    button("8"),
-                    button("9"),
-                    button("+")
-                  ]),
-                  TableRow(children: [
-                    button("C"),
-                    button("0"),
-                    button("."),
-                    button("/")
-                  ]),
-                  TableRow(children: [
-                    Container(),
-                    Container(),
-                    Container(),
-                    button("="),
-                  ])
-                ],
-              ),
-            ),
-          )
-        ]));
+    return Scaffold(
+        body: Column(children: [
+      // Display Numbers
+      Container(
+          height: 300.0,
+          width: _width,
+          margin: EdgeInsets.fromLTRB(10, 25, 10, 10),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(90.0),
+          ),
+          child: viewNumbers(query, result)),
+
+      // Display Buttons
+      Container(
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Table(
+            children: [
+              TableRow(children: [
+                button("1"),
+                button("2"),
+                button("3"),
+                button("×")
+              ]),
+              TableRow(children: [
+                button("4"),
+                button("5"),
+                button("6"),
+                button("÷")
+              ]),
+              TableRow(children: [
+                button("7"),
+                button("8"),
+                button("9"),
+                button("-")
+              ]),
+              TableRow(children: [
+                button("C"),
+                button("0"),
+                button("."),
+                button("+")
+              ]),
+            ],
+          ),
+        ),
+      ),
+
+      Container(
+        width: _width,
+        alignment: Alignment.centerRight,
+        padding: EdgeInsets.fromLTRB(0, 5.0, 0, 5.0),
+        child: button("="),
+      )
+    ]));
   }
 
   // Widgets for the UI
-  Widget viewNumbers(String query, String result) => Column(
-        children: [
-          Text(
+  Widget viewNumbers(String query, String result) {
+    return Stack(
+      children: [
+        Positioned(
+          bottom: 120,
+          right: 0,
+          child: Text(
             query,
             style: TextStyle(
-                fontSize: 40, fontWeight: FontWeight.bold, color: Colors.teal),
+                fontSize: 45,
+                fontWeight: FontWeight.bold,
+                color: Colors.blueGrey),
           ),
-          Text(
+        ),
+        Positioned(
+          bottom: 50,
+          right: 0,
+          child: Text(
             result,
             style: TextStyle(
-                fontSize: 40, fontWeight: FontWeight.bold, color: Colors.teal),
-          )
-        ],
-      );
+                fontSize: 45,
+                fontWeight: FontWeight.bold,
+                color: Colors.pinkAccent),
+          ),
+        )
+      ],
+    );
+  }
 
   Widget button(String value) => Container(
-        padding: EdgeInsets.all(5.0),
-        height: 80,
+        height: 75.0,
+        width: 295.0,
+        padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
         child: RaisedButton(
+          color: Colors.white,
+          elevation: 5.0,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
           onPressed: () {
             setState(() {
               if (value == "C") {

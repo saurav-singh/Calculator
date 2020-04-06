@@ -1,13 +1,16 @@
 import 'package:stack/stack.dart' as _Stack;
 
 // TEMP CALCULATION FUNCTIONS - put to a class
+// * -> ×
+// / -> ÷
+   
 
 String calculate(String query) {
   String result = "";
   if (query.contains("+") ||
       query.contains("-") ||
-      query.contains("*") ||
-      query.contains("/")) {
+      query.contains("×") ||
+      query.contains("÷")) {
     query = processQuery(query);
     query = getPostfix(query);
     try {
@@ -24,7 +27,7 @@ String calculate(String query) {
 
 String processQuery(String query) {
   String newQuery = "";
-  String operators = "+-*/";
+  String operators = "+-×÷";
   for (int i = 0; i < query.length; i++) {
     if (operators.contains(query[i]))
       newQuery += " " + query[i] + " ";
@@ -37,8 +40,8 @@ String processQuery(String query) {
 String getPostfix(String infix) {
   _Stack.Stack<String> stack = _Stack.Stack();
   String postfix = "";
-  String operators = "+-*/";
-  Map order = {"+": 1, "-": 1, "*": 2, "/": 2, "(": 3, ")": 3};
+  String operators = "+-×÷";
+  Map order = {"+": 1, "-": 1, "×": 2, "÷": 2, "(": 3, ")": 3};
   List<String> tokens = infix.split(" ");
 
   for (int i = 0; i < tokens.length; i++) {
@@ -68,7 +71,7 @@ String getPostfix(String infix) {
 String getResult(String query) {
   _Stack.Stack<double> stack = _Stack.Stack();
   List<String> tokens = query.split(" ");
-  String operators = "+-*/";
+  String operators = "+-×÷";
 
   if (tokens.length < 2 && tokens.length % 2 == 0) return "0";
   for (int i = 0; i < tokens.length; i++) {
@@ -79,9 +82,9 @@ String getResult(String query) {
         stack.push(x + y);
       else if (tokens[i] == "-")
         stack.push(y - x);
-      else if (tokens[i] == "*")
+      else if (tokens[i] == "×")
         stack.push(x * y);
-      else if (tokens[i] == "/") stack.push(y / x);
+      else if (tokens[i] == "÷") stack.push(y / x);
     } else {
       stack.push(double.parse(tokens[i]));
     }
